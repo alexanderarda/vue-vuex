@@ -10,6 +10,16 @@ export const store = new Vuex.Store({
     post_title: "Default title",
     post_content: "Default content"
   },
+
+  mutations: {
+    updatePostTitle(state, post_title) {
+      state.post_title = post_title;
+    },
+    updatePostContent(state, post_content) {
+      state.post_content = post_content;
+    }
+  },
+
   getters: {
     NAME: state => {
       return state.name;
@@ -21,14 +31,7 @@ export const store = new Vuex.Store({
       return state.post_content;
     }
   },
-  mutations: {
-    updatePostTitle(state, post_title) {
-      state.post_title = post_title;
-    },
-    updatePostContent(state, post_content) {
-      state.post_content = post_content;
-    }
-  },
+
   actions: {
     SET_NAME: async (context, name) => {
       let { data } = await Axios.get(
