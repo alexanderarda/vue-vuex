@@ -12,18 +12,24 @@ export const store = new Vuex.Store({
   },
 
   mutations: {
+    // Commit state
     updatePostTitle(state, post_title) {
+      console.log("updatePostTitle triggered");
       state.post_title = post_title;
     },
     updatePostContent(state, post_content) {
+      console.log("updatePostContent triggered");
       state.post_content = post_content;
+    },
+
+    // Commit state using Object-Style Commit
+    SET_CONTENT: (state, payload) => {
+      state.post_content = payload.body;
+      state.post_title = payload.title;
     }
   },
 
   getters: {
-    NAME: state => {
-      return state.name;
-    },
     POST_TITLE: state => {
       return state.post_title;
     },
@@ -33,16 +39,13 @@ export const store = new Vuex.Store({
   },
 
   actions: {
-    SET_NAME: async (context, name) => {
+    // load content from server
+    LOAD_CONTENT: async (context, payload) => {
       let { data } = await Axios.get(
         "https://jsonplaceholder.typicode.com/posts/1"
       );
-
       console.log(data);
-
-      if (data.status === 200) {
-        context.dispatch("SET_NAME", name);
-      }
+      context.commit("SET_CONTENT", data);
     }
   }
 });

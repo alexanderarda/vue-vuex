@@ -1,36 +1,42 @@
 <template>
   <div>
-    <h2>{{ title }}</h2>
-    <p>{{ $store.getters.POST_CONTENT }}</p>
-    <small>Author : {{ author }}</small>
-    <hr>
-
+    <h2>{{ this.$store.getters.POST_TITLE }}</h2>
+    <p>{{ POST_CONTENT }}</p>
+    <p>
+      <small>Author : {{ author }}</small>
+    </p>
+    <button @click="load_content_from_server">Load Content</button>
+    <br>
     <label for="post_title">Change Content</label>
+    <br>
     <input @input="change_content" name="post_title">
   </div>
 </template>
 
 <script>
+import { mapGetters, mapActions } from "vuex";
+
 export default {
   methods: {
+    // change content without using  mapActions
     change_content: function(event) {
-      console.log(event.target.value);
       this.$store.commit("updatePostContent", event.target.value);
-    }
+    },
+
+    // change content using mapActions
+    ...mapActions({
+      load_content_from_server: "LOAD_CONTENT"
+    })
   },
   data() {
     return {
-      // get default value from store
-      title: this.$store.getters.POST_TITLE,
-      //content: this.$store.getters.POST_CONTENT,
-      author: this.$store.getters.NAME
+      // getting store value without using map getter
+      author: this.$store.getters.POST_AUTHOR
     };
   },
-  // data: {
-  //   message: 'Hello world!'
-  // },
   computed: {
-    //return this.$store.getters.POST_TITLE;
+    // getting store value using map getter
+    ...mapGetters(["POST_CONTENT"])
   }
 };
 </script>
