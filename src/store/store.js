@@ -6,7 +6,7 @@ Vue.use(Vuex);
 
 export const store = new Vuex.Store({
   state: {
-    name: "arda",
+    post_author: "arda",
     post_title: "Default title",
     post_content: "Default content"
   },
@@ -35,6 +35,9 @@ export const store = new Vuex.Store({
     },
     POST_CONTENT: state => {
       return state.post_content;
+    },
+    POST_AUTHOR: state => {
+      return state.post_author;
     }
   },
 
